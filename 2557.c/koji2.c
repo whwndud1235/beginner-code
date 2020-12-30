@@ -4,7 +4,9 @@ int main()
 {
     int n, i;
     char ch;
-    int alpha[26] = {0, };
+    int alpha[26] = {
+        0,
+    };
 
     printf("input : ");
     scanf("%d \n", &n);
@@ -15,11 +17,9 @@ int main()
     {
         scanf("%c", &ch);
         if (ch <= 'Z')
-            index = ch - 65;// 'A'=65 A
+            index = ch - 'A'; // 'A'=65 A
         else
-            index = ch - 97;
-
-        printf("%d \n", index);
+            index = ch - 'a';
         alpha[index]++;
     }
     for (i = 0; i < 26; i++)
