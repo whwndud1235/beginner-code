@@ -6,14 +6,14 @@ int main()
 
     scanf("%d", &n);
 
-    int num[5];
+    int num[n];
 
     for (i = 0; i < n; i++)
     {
         scanf("%d", &num[i]);
     }
 
-    int max = 0;
+    int max = num[i];
 
     for (i = 0; i < n; i++)
     {

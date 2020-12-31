@@ -12,15 +12,17 @@ int main()
 
     int mel = 0;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < 7; i++)
     {
         if (a[i] - a[i + 1] == -1)
             mel = -1;
         else if (a[i] - a[i + 1] == 1)
             mel = 1;
         else
+        {
             mel = 0;
-        break;
+            break;
+        }
     }
 
     if (mel == -1)
@@ -30,5 +32,5 @@ int main()
     if (mel == 0)
         printf("mixed");
 
-        return 0;
+    return 0;
 }
