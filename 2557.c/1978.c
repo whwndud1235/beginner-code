@@ -9,12 +9,12 @@ int main(void)
     for (int i = 0; i < n; i++)
     {
         scanf("%d", &num);
-        for (int j = 2; j <= num; j++)
+        for (int j = 2; j <= num; j++) //1 제외
         {
             if (num == j)
                 count++;
             printf("%d %d \n", num, j);
-            if (num % j == 0)
+            if (num % j == 0)  // 배수 제외
                 break;
         }
     }
