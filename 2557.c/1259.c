@@ -2,7 +2,7 @@
 #include <string.h>
 
 int main()
-{4
+{
     int T, R;
     int i, j;
     char S[20];
