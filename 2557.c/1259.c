@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(void)
-{
-
+int main()
+{4
     int T, R;
-    char S[20]; // 적어도 1, 20글자 넘지 않기때문
+    int i, j;
+    char S[20];
 
-    scanf("%d", &T); //test case 갯수
+    scanf("%d", &T);
 
-    for (int i = 0; i < T; i++) //테이스 케이스 만큼 반복
+    for (i = 0; i < T; i++)
     {
-
-        scanf("%d %s", &R, S);   //반복횟수 , 반복할 문자열 S
-
-        for (int i = 0; i < strlen(S); i++)  //문자열 길이
-            for (int j = 0; j < R; j++)
+        scanf("%d %s", &R, S);
+        for (i = 0; i < strlen(S); i++)
+            for (j = 0; j < R; j++)
+            {
                 printf("%c", S[i]);
-
-        printf("\n");
+            }
+            printf("\n");
     }
+    return 0;
 }
