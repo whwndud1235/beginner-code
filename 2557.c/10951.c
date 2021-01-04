@@ -1,16 +1,9 @@
 #include <stdio.h>
 
 int main()
-{   
-    int a,b;
-
-    int sum;
-    for (int i = 0; i < T; i++)
-    {
-        scanf("%d %d", &a, &b);
-
-        sum = a + b;
-        printf("%d\n", sum);
-    }
-    return 0;
+{
+    int a, b;
+    
+    while (scanf("%d %d", &a, &b) != EOF)
+        printf("%d \n", a + b);
 }
