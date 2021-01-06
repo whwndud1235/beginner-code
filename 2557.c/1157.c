@@ -31,10 +31,9 @@ int main()
         if (max < arr[i])
         {
             max = arr[i];
-            k = i;
-        } //max 구하고 max index구하고(?)
-    }
-    //printf("%d %d\n", max, k);
+            k = i;               //max 구하고 max index구하고(?)
+        }
+    } //printf("%d %d\n", max, k);
 
     //버블정렬
     for (i = 0; i < 26; i++)
