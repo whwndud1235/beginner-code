@@ -12,7 +12,7 @@ int main()
         scanf("%d", &input);  //정수의 갯수만큼 입력을 받고
         arr[input]++;  //입력 받자마자 바로 더해주기 **포인트** <메모리 초과 피하기>
     }
-    for (i = 0; i < 10001; i++)
+    for (i = 0; i < 1000; i++)
     {
         if (arr[i] == 0)  // 0이면 출력 x
             continue;     
