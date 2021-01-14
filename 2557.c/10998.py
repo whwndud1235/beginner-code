@@ -1,4 +1,1 @@
-a,b = input().split()
-a = int(a)
-b = int(b)
-print(a*b)
+x=4; 1<x<5

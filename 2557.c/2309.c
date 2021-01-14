@@ -28,11 +28,14 @@ int main()
     for (i = 0; i < 9; i++)
     {
         sum += dwarf[i];
+    }
+    for (i = 0; i < 9; i++)
+    {
         for (j = 0; j < 9; j++)
         {
             if (sum - dwarf[i] - dwarf[j] == 100)
             {
-                printf("%d,%d\n", dwarf[i], dwarf[j]);
+                //printf("%d,%d\n", dwarf[i], dwarf[j]);
                 check1 = i;
                 check2 = j;
             }
