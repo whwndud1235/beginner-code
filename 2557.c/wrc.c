@@ -114,7 +114,7 @@ void loop()
 {
     int mode = digitalRead(user_mode);
 
-    if (mode == 1)
+    if (mode == 1) //자동인듯?
     {
         Final_Data();
         // 노이즈 제거된 깔끔한 데이터 받고 알고리즘 실행
@@ -460,7 +460,7 @@ void Final_Data()
 
     //stime = micros();
 
-    if ((abs(w_Left) < 400) && (abs(w_Right) < 400))
+    if ((abs(w_Left) < 400) && (abs(w_Right) < 400))   //노이즈(?)
     {
         alg_trigger = 1; // 제대로된 데이터를 수신해야 알고리즘에 집어 넣음
     }
@@ -512,7 +512,7 @@ void get_data_Left()
     {
         Re_buf[counter] = (unsigned char)Serial1.read();
         if (counter == 0 && Re_buf[0] != 0x55)
-            return; //第0号数据不是帧头
+            return; //第0号数据不是帧头(0번 데이터 프레임 아님?)
 
         // 0x53만 받아야되는데, 제품회사 소프트웨어의 컨텐츠를 각도만 받게끔 설정해야 빨리받음
         // 0x51, 0x52 받아버리면 속도 느려짐
@@ -527,9 +527,9 @@ void get_data_Left()
         }
         counter++;
 
-        if (counter == 11) //接收到11个数据
+        if (counter == 11) //11개의 데이터 접수
         {
-            counter = 0; //重新赋值，准备下一帧数据的接收
+            counter = 0; //重新赋值，准备下一帧数据的接收 (값을 다시 부과하여 다음 프레임 데이터와 수신을 준비)
             sign_Left = 1;
             buff_trigger++; // 이거 loop로 옮기면 느려진다.!
             //Serial.println("L_All data save");
