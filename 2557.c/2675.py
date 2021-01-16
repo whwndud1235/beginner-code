@@ -1,4 +1,3 @@
-# 파이썬 연습지
 T = int(input())
 
 for x in range(T):
