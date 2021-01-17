@@ -1,4 +1,3 @@
-# 파이썬 연습지
 def metrix(r,c):
     metrix = [['★' if (j+i) % 2 == 0 else '☆' for j in range(c)] for i in range(r)]
     return metrix
