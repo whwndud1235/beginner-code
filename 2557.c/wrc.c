@@ -28,16 +28,17 @@
 #define Baudrate 115200
 
 //============================= 사용자 정의함수 INDEX ===============================
-void initialize();
-int ReadFSR_Left();
-int ReadFSR_Right();
-bool CheckPhotoINT_Left();
+void initialize();  //시작
+int ReadFSR_Left();  //왼쪽 압력센서
+int ReadFSR_Right();  //오른쪽 압력센서
+bool CheckPhotoINT_Left();  //  오른쪽 왼쪽 포토인터럽터
 bool CheckPhotoINT_Right();
-void motor_operation();
-void Final_Data();
-void get_data_Left();
+void motor_operation();   //모터작동
+void Final_Data();    //(?)
+
+void get_data_Left();    //왼쪽 오른쪽 데이터 
 void get_data_Right();
-float get_angle_Left();
+float get_angle_Left();   //왼쪽 오른쪽 각도
 float get_angle_Right();
 
 //============================= 전역변수 설정 ===============================
@@ -73,8 +74,8 @@ unsigned char state = 0; // 0 : 일어서있는 상태(의자 다리가 접힌 �
 
 /* 자동모드 수동모드 변환을 위한 input용 핀 변수 */
 const int user_mode = 4; // input으로 사용할 것임
-const int fold_motor = 5;
-const int unfold_motor = 6;
+const int fold_motor = 5;    //접히게?
+const int unfold_motor = 6;   //펴진상태?
 
 /* 모터 제어를 위한 변수 */
 // 설정
@@ -82,13 +83,14 @@ const char Microstep = 8;       // 마이크로스텝 (8 --> 1600 step / 1 rev)
 const double time_req = 500000; // setup_micro
 const double theta = 45;        // setup
 
-const int TimeToUnfolding = 900; // 900 ms 동안 모터 동작시켜서 다리 펼침 (각도제어가 없기에 trial and error 로 테스트해야함)
-double step_req;
+const int TimeToUnfolding = 900; // 900 ms 동안 모터 동작시켜서 다리 펼침 (각도제어가 없기에 trial and error 로 테스트해야함)  0.9초~
+double step_req; 
 double freq_req;
 
 // 모터 드라이버 핀 설정
 const int Motor_enable = 799;
 const int Motor_disable = 0;
+
 const int DIR_L = 9;
 const int DIR_R = 10;
 const int PWM_L = 11; // Motor Right Pin
@@ -145,7 +147,7 @@ void loop()
             case 1: // 다리가 펴진 상태에서 조건 만족시 다리 접힘
                 if ((after_angle_Left < 30) && (after_angle_Left > -10) && (after_angle_Right < 30) && (after_angle_Right > -10))
                 {
-                    if ((ReadFSR_Left() < FSR_Threshold) && (ReadFSR_Right() < FSR_Threshold))
+                    if ((ReadFSR_Left() < FSR_Threshold) && (ReadFSR_Right() < FSR_Threshold))  //앉아있는동안 다리 안접히게?
                     {
                         motor_operation(1);
                         state = 0;
@@ -172,7 +174,7 @@ void loop()
 
         if ((operate_switch_1 == 1) && (operate_switch_2 == 0))
         {
-            Serial.println("MOTOR FOLD");
+            Serial.println("MOTOR FOLD");  //다리접기
             digitalWrite(DIR_L, LOW);  // CCW
             digitalWrite(DIR_R, HIGH); // CW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
             OCR1A = Motor_enable;      // enable
@@ -180,7 +182,7 @@ void loop()
         }
         else if ((operate_switch_1 == 0) && (operate_switch_2 == 1))
         {
-            Serial.println("MOTOR UNFOLD");
+            Serial.println("MOTOR UNFOLD");   //다리펴기
             digitalWrite(DIR_L, HIGH); // CW
             digitalWrite(DIR_R, LOW);  // CCW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
             OCR1A = Motor_enable;      // enable
@@ -385,12 +387,14 @@ void motor_operation(int num)
         digitalWrite(LED_Motor, LOW);
         //LCD.clear();
         break;
+
     case 2: // emergency stop --> 이후 Reset 과 연계
         digitalWrite(LED_Emerg, HIGH);
         Serial.println("Emergency Stop");
         OCR1A = 799; // disable
         OCR1B = 799; // disable
         break;
+        
     case 3: // reset (접힌상태로) --> Emergency Stop 과 연계되어 사용됨
         // 탈조풀어주고 포토인터럽트 확인 + 모터동작으로 원위치 시키기
         Serial.println("Reset Position");

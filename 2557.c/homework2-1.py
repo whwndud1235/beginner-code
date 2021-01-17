@@ -1,5 +1,3 @@
-# 파이썬 연습지
-
 def reverse(s):
     new_str = s[::-1]
     return new_str
