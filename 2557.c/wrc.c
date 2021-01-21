@@ -28,17 +28,17 @@
 #define Baudrate 115200
 
 //============================= 사용자 정의함수 INDEX ===============================
-void initialize();  //시작
-int ReadFSR_Left();  //왼쪽 압력센서
-int ReadFSR_Right();  //오른쪽 압력센서
-bool CheckPhotoINT_Left();  //  오른쪽 왼쪽 포토인터럽터
+void initialize();         //시작
+int ReadFSR_Left();        //왼쪽 압력센서
+int ReadFSR_Right();       //오른쪽 압력센서
+bool CheckPhotoINT_Left(); //  오른쪽 왼쪽 포토인터럽터
 bool CheckPhotoINT_Right();
-void motor_operation();   //모터작동
-void Final_Data();    //(?)
+void motor_operation(); //모터작동
+void Final_Data();      //(?)
 
-void get_data_Left();    //왼쪽 오른쪽 데이터 
+void get_data_Left(); //왼쪽 오른쪽 데이터
 void get_data_Right();
-float get_angle_Left();   //왼쪽 오른쪽 각도
+float get_angle_Left(); //왼쪽 오른쪽 각도
 float get_angle_Right();
 
 //============================= 전역변수 설정 ===============================
@@ -73,9 +73,9 @@ unsigned char alg_trigger = 0; // 알고리즘 시작용 트리거 (각속도 �
 unsigned char state = 0; // 0 : 일어서있는 상태(의자 다리가 접힌 상태), 1 : 앉은 상태(의자 다리가 펴진 상태)
 
 /* 자동모드 수동모드 변환을 위한 input용 핀 변수 */
-const int user_mode = 4; // input으로 사용할 것임
-const int fold_motor = 5;    //접히게?
-const int unfold_motor = 6;   //펴진상태?
+const int user_mode = 4;    // input으로 사용할 것임
+const int fold_motor = 5;   //접히게?
+const int unfold_motor = 6; //펴진상태?
 
 /* 모터 제어를 위한 변수 */
 // 설정
@@ -84,7 +84,7 @@ const double time_req = 500000; // setup_micro
 const double theta = 45;        // setup
 
 const int TimeToUnfolding = 900; // 900 ms 동안 모터 동작시켜서 다리 펼침 (각도제어가 없기에 trial and error 로 테스트해야함)  0.9초~
-double step_req; 
+double step_req;
 double freq_req;
 
 // 모터 드라이버 핀 설정
@@ -123,16 +123,16 @@ void loop()
         if (alg_trigger == 1)
         {
             ////       필요시 쓰세요 데이터 값 확인용 시리얼모니터
-            //            Serial.print("   A_L : ");
-            //            Serial.print(after_angle_Left);
-            //            Serial.print("   W_L : ");
-            //            Serial.print(w_Left);
-            //            Serial.print("   A_R : ");
-            //            Serial.print(after_angle_Right);
-            //            Serial.print("   W_R : ");
-            //            Serial.print(w_Right);
-            //            Serial.print("   dt : ");
-            //            Serial.println(dt, 8.8);
+            Serial.print("   A_L : ");
+            Serial.print(after_angle_Left);
+            Serial.print("   W_L : ");
+            Serial.print(w_Left);
+            Serial.print("   A_R : ");
+            Serial.print(after_angle_Right);
+            Serial.print("   W_R : ");
+            Serial.print(w_Right);
+            Serial.print("   dt : ");
+            Serial.println(dt, 8.8);
 
             switch (state)
             {
@@ -147,7 +147,7 @@ void loop()
             case 1: // 다리가 펴진 상태에서 조건 만족시 다리 접힘
                 if ((after_angle_Left < 30) && (after_angle_Left > -10) && (after_angle_Right < 30) && (after_angle_Right > -10))
                 {
-                    if ((ReadFSR_Left() < FSR_Threshold) && (ReadFSR_Right() < FSR_Threshold))  //앉아있는동안 다리 안접히게?
+                    if ((ReadFSR_Left() < FSR_Threshold) && (ReadFSR_Right() < FSR_Threshold)) //앉아있는동안 다리 안접히게?
                     {
                         motor_operation(1);
                         state = 0;
@@ -174,19 +174,19 @@ void loop()
 
         if ((operate_switch_1 == 1) && (operate_switch_2 == 0))
         {
-            Serial.println("MOTOR FOLD");  //다리접기
-            digitalWrite(DIR_L, LOW);  // CCW
-            digitalWrite(DIR_R, HIGH); // CW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
-            OCR1A = Motor_enable;      // enable
-            OCR1B = Motor_enable;      // enable
+            Serial.println("MOTOR FOLD"); //다리접기
+            digitalWrite(DIR_L, LOW);     // CCW
+            digitalWrite(DIR_R, HIGH);    // CW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
+            OCR1A = Motor_enable;         // enable
+            OCR1B = Motor_enable;         // enable
         }
         else if ((operate_switch_1 == 0) && (operate_switch_2 == 1))
         {
-            Serial.println("MOTOR UNFOLD");   //다리펴기
-            digitalWrite(DIR_L, HIGH); // CW
-            digitalWrite(DIR_R, LOW);  // CCW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
-            OCR1A = Motor_enable;      // enable
-            OCR1B = Motor_enable;      // enable
+            Serial.println("MOTOR UNFOLD"); //다리펴기
+            digitalWrite(DIR_L, HIGH);      // CW
+            digitalWrite(DIR_R, LOW);       // CCW --> 두 다리가 대칭구조이므로 모터도 대칭 회전방향을 가져야함
+            OCR1A = Motor_enable;           // enable
+            OCR1B = Motor_enable;           // enable
         }
         else
         {
@@ -394,7 +394,7 @@ void motor_operation(int num)
         OCR1A = 799; // disable
         OCR1B = 799; // disable
         break;
-        
+
     case 3: // reset (접힌상태로) --> Emergency Stop 과 연계되어 사용됨
         // 탈조풀어주고 포토인터럽트 확인 + 모터동작으로 원위치 시키기
         Serial.println("Reset Position");
@@ -464,46 +464,59 @@ void Final_Data()
 
     //stime = micros();
 
-    if ((abs(w_Left) < 400) && (abs(w_Right) < 400))   //노이즈(?)
+    if ((abs(w_Left) < 400) && (abs(w_Right) < 400)) //노이즈(?)
     {
         alg_trigger = 1; // 제대로된 데이터를 수신해야 알고리즘에 집어 넣음
     }
 
-    //  if (LCD_HZ >= 30)
-    //  {
-    //    // 다른 값들도 출력.... 확인용!!
-    //    Serial.print("FSR_L : "); Serial.print(ReadFSR_Left()); Serial.print("     FSR_R : "); Serial.println(ReadFSR_Right());
-    //    if (CheckPhotoINT_Left()) Serial.print("PhotoInt_Left : Exist  /  ");
-    //    else Serial.print("PhotoInt_Left : None  /  ");
-    //    if (CheckPhotoINT_Right()) Serial.println("Photoint_Right : Exist");
-    //    else Serial.println("PhotoInt_Right : None");
+    if (LCD_HZ >= 30)
+    {
+        //    // 다른 값들도 출력.... 확인용!!
+        Serial.print("FSR_L : ");
+        Serial.print(ReadFSR_Left());
+        Serial.print("     FSR_R : ");
+        Serial.println(ReadFSR_Right());
+        if (CheckPhotoINT_Left())
+            Serial.print("PhotoInt_Left : Exist  /  ");
+        else
+            Serial.print("PhotoInt_Left : None  /  ");
+        if (CheckPhotoINT_Right())
+            Serial.println("Photoint_Right : Exist");
+        else
+            Serial.println("PhotoInt_Right : None");
 
-    //    //  출력화면 :   윗줄 > Ang : XX.X  XX.X
-    //    //            아래줄 > Pres : XXX  XXX
-    //    int P_L = analogRead(FSR_Left), P_R = analogRead(FSR_Right);
-    //
-    //    //LCD.setCursor(0, 0);
-    //    //LCD.print("Ang:");
-    //    //LCD.setCursor(4, 0);
-    //    //LCD.print(after_angle_Left, 1);
-    //    //LCD.setCursor(11, 0);
-    //    //LCD.print(after_angle_Right, 1);
-    //    //LCD.setCursor(0, 1);
-    //    //LCD.print("Press:");
-    //    //LCD.setCursor(6, 1);
-    //    if (P_L < 1000) //LCD.print(" ");
-    //    if (P_L < 100) //LCD.print(" ");
-    //    if (P_L < 10) //LCD.print(" ");
-    //    //LCD.print(P_L);
-    //    //LCD.setCursor(12, 1);
-    //    if (P_R < 1000) //LCD.print(" ");
-    //    if (P_R < 100) //LCD.print(" ");
-    //    if (P_R < 10) //LCD.print(" ");
-    //    //LCD.print(P_R);
-    //    //    //LCD.setCursor(13, 0); //LCD.print("   "); // 갱신되면서 소수점 남아있는거 지워줄라고... ㅎㅎ
-    //    //    //LCD.setCursor(13, 1); //LCD.print("   ");
-    //    //LCD_HZ = 0; // 수신량 초기화
-    //  }
+        //    //  출력화면 :   윗줄 > Ang : XX.X  XX.X
+        //    //            아래줄 > Pres : XXX  XXX
+        int P_L = analogRead(FSR_Left), P_R = analogRead(FSR_Right);
+
+        //LCD.setCursor(0, 0);
+        //LCD.print("Ang:");
+        //LCD.setCursor(4, 0);
+        //LCD.print(after_angle_Left, 1);
+        //LCD.setCursor(11, 0);
+        //LCD.print(after_angle_Right, 1);
+        //LCD.setCursor(0, 1);
+        //LCD.print("Press:");
+        //LCD.setCursor(6, 1);
+        if (P_L < 1000)
+            //      LCD.print(" ");
+            if (P_L < 100)
+                //      LCD.print(" ");
+                if (P_L < 10)
+                    //          LCD.print(" ");
+                    //LCD.print(P_L);
+                    //        LCD.setCursor(12, 1);
+                    if (P_R < 1000)
+                        //            LCD.print(" ");
+                        if (P_R < 100)
+                            //            LCD.print(" ");
+                            if (P_R < 10)
+                                //            LCD.print(" ");
+                                //LCD.print(P_R);
+                                //    //LCD.setCursor(13, 0); //LCD.print("   "); // 갱신되면서 소수점 남아있는거 지워줄라고... ㅎㅎ
+                                //    //LCD.setCursor(13, 1); //LCD.print("   ");
+                                LCD_HZ = 0; // 수신량 초기화
+    }
 }
 
 /* ====== 자이로센서 데이터 처리하는 함수들 =======*/
