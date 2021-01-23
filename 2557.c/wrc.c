@@ -164,7 +164,7 @@ void loop()
         // 트리거 초기화
         alg_trigger = 0;
         buff_trigger = 0;
-        //LCD_HZ++;
+        LCD_HZ++;
     }
 
     else
@@ -214,7 +214,8 @@ void initialize()
 
     //  step_req = 200 * 14 * Microstep * theta / 360; // 14는 감속비
     //  freq_req = step_req / (time_req / 1000000);
-    //Serial.println(step_req); Serial.println(freq_req);
+    Serial.println(step_req);
+    Serial.println(freq_req);
 
     //LCD.setCursor(0, 0);
     //LCD.print("pinMode setup..");
@@ -458,7 +459,7 @@ void Final_Data()
     //etime = micros();
 
     // 각속도 계산
-    // double dt = (etime - stime) / 1000000; //microsec
+    double dt = (etime - stime) / 1000000; //microsec
     w_Left = (after_angle_Left - prev_angle_Left) / dt;
     w_Right = (after_angle_Right - prev_angle_Right) / dt;
 
