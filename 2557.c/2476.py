@@ -1,7 +1,7 @@
-n=int(input())
-money=0
+n=int(input())   #test case 주기
+money=0 
 
-for _ in range(n):
+for _ in range(n):     
     a, b, c = map(int, input().split())  # 나열해서 쓸 수 있음
     if a == b == c:  # 3개 동일할 경우
         res = 10000 + a * 1000
