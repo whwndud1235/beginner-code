@@ -1,13 +1,18 @@
-N = input()
-N = int(N)
+n=int(input())
+money=0
 
-dice = [[int(input()) for _ in range(3)] for _ in range(N)]
-if dice[0] == dice[1] == dice[2]:
-    print(10000 + dice[0]*1000)
-elif dice[0] == dice[1] or dice[1] == dice[2] or dice[2] == dice[0]:
-    print(1000 + dice[0]*100)
-elif [dice[i] for i in range(3)]:
-    dice[0] = max
-    if max < dice[i]:
-        max = dice[i]
-        print(max*100)
+for _ in range(n):
+    a, b, c = map(int, input().split())  # 나열해서 쓸 수 있음
+    if a == b == c:  # 3개 동일할 경우
+        res = 10000 + a * 1000
+    elif a == b or b == c:  # 두개만 같을 경우
+        res = 1000 + b * 100
+    elif c == a:
+        res = 1000 + c * 100
+    else:  # 3개 다 다를경우
+        res = max(a, b, c) * 100  #max 함수 이용
+
+    if res > money:
+        money = res
+
+print(money)
